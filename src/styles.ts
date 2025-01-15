@@ -17,7 +17,9 @@ const header = styled.div`
 `
 
 const body = styled.div`
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
     min-block-size: 40vh;
     justify-content: center;
     align-items: center;
