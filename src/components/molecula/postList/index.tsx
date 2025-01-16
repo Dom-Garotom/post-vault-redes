@@ -3,28 +3,38 @@ import React, { useEffect, useState } from 'react'
 import { PostContainer, PostContainerInfo } from './style'
 import PopoverPost from '../../atomo/popover'
 import Post from '../post'
-import { PostApi } from '../../../services/api/postApi'
 import { Post as TypePost } from '../../../types/post'
+import { User } from '../../../types/user'
+import { fetchData } from '../../../utils/fetchData'
+import { postWithUserInfo } from '../../../types/postWithUser'
+import { mergePostWithUser } from '../../../utils/mergePostWithUser'
+
 
 export default function PostList() {
-  const [postList , setPostList] = useState<TypePost[]>([])
+  const [listPostWithUserInfo, setListPostWithUserInfo] = useState<postWithUserInfo[] | undefined>([])
 
   useEffect(() => {
-    fetchPost();
+    fetchAndOrderData();
+  }, [])
 
-  } , [])
-
-  const fetchPost = async ()  => {
+  const fetchAndOrderData = async () => {
     try {
-      const postResponse = await PostApi.get("/posts");
-  
-      if (!postResponse.data) {
-        throw new Error("Não foi possivel realizar a requisição");
+      const [userResponse, postResponse] = await Promise.all([
+        fetchData<User>("/users"),
+        fetchData<TypePost>("/posts"),
+      ])
+
+      if (!userResponse || !postResponse) {
+        throw new Error("Não foi possível realizar a requisição dos dados")
       }
-  
-      const postList : TypePost[]  = postResponse.data;
-      setPostList(postList)
-      
+
+      const postList = postResponse
+      const userList = userResponse
+
+      // Retorna um objeto com as informações dos post atrelado com as nformações dos usuários que fez o post
+      const listPostWithUser = mergePostWithUser(postList, userList);
+      setListPostWithUserInfo(listPostWithUser)
+
     } catch (error) {
       console.log("Error : " + error)
     }
@@ -37,14 +47,15 @@ export default function PostList() {
         <PopoverPost />
       </PostContainerInfo>
 
-      {postList.map(  post => (
+      {listPostWithUserInfo?.map(post => (
         <Post
           key={post.id}
-          userId={post.userId}
+          userName={post.username}
+          email={post.email}
           postTitle={post.title}
           body={post.body}
         />
-      )) }
+      ))}
 
     </PostContainer>
   )
