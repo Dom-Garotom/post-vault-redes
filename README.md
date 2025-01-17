@@ -70,17 +70,19 @@ index.tsx
 
 1. Clone o repositório:
 
-````bash
+```bash
 $ git clone https://github.com/seu-usuario/sms-legrand-a24h-frontend.git
 ```
 
 2. Instale as dependências:
+
 ```bash
 $ cd sms-legrand-a24h-frontend
 $ npm install
 ```
 
 3. Inicie o servidor de desenvolvimento:
+
 ```bash
 $ npm start
-````
+```
