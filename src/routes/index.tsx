@@ -1,0 +1,22 @@
+import React from 'react'
+import { Route, Routes as Switch, Navigate } from 'react-router-dom'
+
+import Home from '../pages/Home'
+
+interface Props {
+  children?: JSX.Element[] | JSX.Element
+}
+
+function Routes({ children }: Props): JSX.Element {
+  return (
+    <React.Fragment>
+      {children}
+      <Switch>
+        <Route path="/" Component={Home} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Switch>
+    </React.Fragment>
+  )
+}
+
+export default Routes
