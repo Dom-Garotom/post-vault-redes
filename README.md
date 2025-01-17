@@ -41,13 +41,13 @@ A estrutura de pastas do projeto segue o Atomic Design Pattern, que separa os co
 1. Clone o repositório:
 
 ```bash
-$ git clone https://github.com/seu-usuario/sms-legrand-a24h-frontend.git
+$ git clone https://github.com/felipealp/react-achtype-example.git
 ```
 
 2. Instale as dependências:
 
 ```bash
-$ cd sms-legrand-a24h-frontend
+$ cd react-achtype-example
 $ npm install
 ```
 
