@@ -15,36 +15,6 @@
 
 A estrutura de pastas do projeto segue o Atomic Design Pattern, que separa os componentes em diferentes níveis de complexidade:
 
-/src
-/components
-/atoms
-Button.tsx
-Input.tsx
-/molecules
-SearchBar.tsx
-Card.tsx
-/organisms
-Header.tsx
-Footer.tsx
-/contexts
-AppContext.tsx
-/pages
-Dashboard.tsx
-Monitoring.tsx
-/routes
-Routes.tsx
-/services
-/api
-apiClient.ts
-endpoints.ts
-monitoringApi.ts
-/styles
-global.scss
-/utils
-helpers.ts
-App.tsx
-index.tsx
-
 ### Explicação das Pastas
 
 - **`/components/atoms`**: Contém os menores blocos de construção do UI, como botões, inputs e labels. São os componentes mais básicos, que não dependem de outros componentes.
