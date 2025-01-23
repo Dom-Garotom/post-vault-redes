@@ -7,7 +7,7 @@ type Props = {
 }
 
 const AppBar: React.FC<Props> = ({ children }: Props): JSX.Element => {
-  const { user, setUser } = useContext(UserContext)
+  const { user } = useContext(UserContext)
 
   useEffect(() => {
     console.log('user:', user)

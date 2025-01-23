@@ -2,7 +2,7 @@ import axios from 'axios'
 import { baseUrl } from './apiConfig'
 
 type Response = {
-  data?: any
+  data?: unknown
   error?: boolean
 }
 
@@ -34,9 +34,9 @@ export const getOne = async (
     })
 }
 
-export const post = async (
+export const post = async <Type> (
   path: string,
-  data: any,
+  data: Type,
   url: string = baseUrl
 ): Promise<Response> => {
   return await axios
@@ -49,9 +49,9 @@ export const post = async (
     })
 }
 
-export const put = async (
+export const put = async <Type> (
   path: string,
-  data: any,
+  data: Type,
   url: string = baseUrl
 ): Promise<Response> => {
   console.log(`${url}${path}`, data)
