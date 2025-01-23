@@ -49,7 +49,7 @@ export default function PostList() {
       </PostContainerInfo>
 
       {listPostWithUserInfo?.map((post) => (
-        <Link to={`/posts/${post.id}`} key={post.id}>
+        <Link to={`/posts/${post.id}`} key={post.id} className='Link'>
           <Post
             key={post.id}
             userName={post.username}
