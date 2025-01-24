@@ -2,7 +2,7 @@ import axios from 'axios'
 import { baseUrl } from './apiConfig'
 
 type Response = {
-  data?: any
+  data?: unknown
   error?: boolean
 }
 

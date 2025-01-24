@@ -8,7 +8,6 @@ export default function Post(){
     const { id } = useParams<{ id: string }>(); 
     const [post, setPost] = useState<PostType | null>(null);
     const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchPost = async () => { 
@@ -18,21 +17,20 @@ export default function Post(){
               throw new Error("Erro ao buscar os dados.");
             }
     
-            const foundPost = response.data.find((post: PostType) => post.id.toString() === id);
+            const posts = response.data as PostType[]; 
+            const foundPost = posts.find((post) => post.id.toString() === id);
             setPost(foundPost || null); 
-          } catch (err: any) {
-            setError(err.message || "Ocorreu um erro inesperado!");
-          } finally {
-            setLoading(false);
+          } catch (err: unknown) {
+            if (err instanceof Error) {
+              setError(err.message || "Ocorreu um erro inesperado!");
+            } else {
+              setError("Erro desconhecido!");
+            }
           }
         };
     
         fetchPost();
     }, [id]); 
-    
-      if (loading) {
-        return <div>Carregando...</div>;
-    }
     
       if (error) {
         return <div>Erro: {error}</div>;
