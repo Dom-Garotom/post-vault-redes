@@ -74,6 +74,7 @@ export default function CreatePost() {
           placeholder="Whats happening?"
           onChange={takeValue}
           value={formData.title}
+          required
         />
       </Wrapper.HeaderForm>
 
@@ -85,6 +86,7 @@ export default function CreatePost() {
           ref={TextArea}
           onChange={takeValue}
           value={formData.body}
+          required
         />
         <ButtonSubmit>Post</ButtonSubmit>
       </Wrapper.BodyForm>
