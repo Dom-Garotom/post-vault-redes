@@ -10,6 +10,10 @@ export const PostContainer =  styled.div`
   border: 1px solid #DCDEE0;
   border-radius: 30px 30px 0px 0px;
   margin-bottom: 20px;
+
+  .Link {
+    text-decoration: none;
+  }
 `
 export const PostContainerInfo =  styled.div`
   display: flex;

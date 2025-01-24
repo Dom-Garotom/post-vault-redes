@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Routes as Switch, Navigate } from 'react-router-dom'
 
 import Home from '../pages/Home'
+import Post from '../pages/post'
 
 interface Props {
   children?: JSX.Element[] | JSX.Element
@@ -13,6 +14,7 @@ function Routes({ children }: Props): JSX.Element {
       {children}
       <Switch>
         <Route path="/" Component={Home} />
+        <Route path="/posts/:id" Component={Post} />
         <Route path="*" element={<Navigate to="/" />} />
       </Switch>
     </React.Fragment>
