@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Post as PostType } from "../../types/post";
 import { getAll } from "../../services/requests";
-import { Paragraph, PostContainer, PostContainerInfo, Title } from "./style";
+import { PostContainerDiv, PostContainerInfoDiv, TitlePost, Paragraph } from "./style";
 
 export default function Post(){
     const { id } = useParams<{ id: string }>(); 
@@ -36,20 +36,20 @@ export default function Post(){
         return <div>Erro: {error}</div>;
     }
 
-    return(
-        <div>
-            {post ? (
-                <PostContainer>
-                    <PostContainerInfo>
-                        <div className="container-info">
-                            <Title>{post.title}</Title>
-                            <Paragraph>{post.body}</Paragraph>
-                        </div>
-                    </PostContainerInfo>
-                </PostContainer>
-            ) : (
-                <div>Post não encontrado</div>
-            )}
-        </div>
-    )
+    return (
+      <div>
+        {post ? (
+          <PostContainerDiv>
+            <PostContainerInfoDiv>
+              <div className="container-info">
+                <TitlePost>{post.title}</TitlePost>
+                <Paragraph>{post.body}</Paragraph>
+              </div>
+            </PostContainerInfoDiv>
+          </PostContainerDiv>
+        ) : (
+          <div>Post não encontrado</div>
+        )}
+      </div>
+    );
 }

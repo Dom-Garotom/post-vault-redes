@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const PostContainer = styled.div`
+export const PostContainerDiv = styled.div`
     width: 100%;
     height: 100%;
     max-width: 630px;
@@ -9,7 +9,7 @@ export const PostContainer = styled.div`
     margin: 0 auto;
 `
 
-export const PostContainerInfo = styled.div`
+export const PostContainerInfoDiv = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -23,7 +23,7 @@ export const PostContainerInfo = styled.div`
     }
 `
 
-export const Title = styled.div`
+export const TitlePost = styled.h1`
     width: 100%;
     font-weight: 700;
     font-size: 2rem;
@@ -34,7 +34,7 @@ export const Title = styled.div`
     overflow: break-word;
 `
 
-export const Paragraph = styled.div`
+export const Paragraph = styled.p`
     width: 100%;
     font-size: 1rem;
     font-family: "Inter", sans-serif;
