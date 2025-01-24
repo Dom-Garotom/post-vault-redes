@@ -1,13 +1,15 @@
 import React from 'react'
-import PostList from '../../components/molecula/postList'
 
 import { Wrapper } from './style'
+import PostList from '../../components/molecula/postList'
+import CreatePost from '../../components/molecula/createPost'
 
 const Home: React.FC = () => {
   return (
-      <Wrapper.body>
-        <PostList />
-      </Wrapper.body>
+    <Wrapper.body>
+      <CreatePost/>
+      <PostList />
+    </Wrapper.body>
   )
 }
 
