@@ -1,5 +1,6 @@
-import { getAll } from "../services/requests"
+import { getAll, post } from "../services/requests"
 import { Post as PostType } from "../types/post"
+import { FormDataSchema, ResponseCreatePost } from './../types/formDataSchema';
 
 export const PostModel = {
     async getPostById(id: string): Promise<PostType | null> {
@@ -18,5 +19,28 @@ export const PostModel = {
             console.error(err);
             throw new Error(err instanceof Error ? err.message: "Erro Desconhecido")
         }
-    }
+    },
+
+
+    async createPost ( formData : FormDataSchema) : Promise< ResponseCreatePost | undefined > {
+        try {
+          const response = await post('/posts', formData)
+    
+          if (response.error) {
+            throw new Error(
+              'Não foi possivel realizar a requisição\nError : ' + response.error
+            )
+          }
+
+          if (!response.data){
+            return {} as ResponseCreatePost;
+          }
+          
+          const serverResponse = response.data as ResponseCreatePost;
+          return  serverResponse;
+
+        } catch (error) {
+          console.log('Error : ' + error)
+        }
+      }
 }

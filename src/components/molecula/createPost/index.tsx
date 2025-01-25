@@ -2,12 +2,8 @@ import { ChangeEvent, FormEvent, useRef, useState } from 'react'
 import userImage from '../../../assets/user-image.png'
 
 import { ButtonSubmit, InputForm, TextAreaForm, Wrapper } from './style'
-import { post } from '../../../services/requests'
-
-interface FormDataSchema {
-  title: string
-  body: string
-}
+import { FormDataSchema } from '../../../types/formDataSchema'
+import { PostModel } from '../../../models/post'
 
 export default function CreatePost() {
   const TextArea = useRef<HTMLTextAreaElement>(null)
@@ -31,27 +27,23 @@ export default function CreatePost() {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
-    postData()
+    createPost()
+    setFormData({
+      title: '',
+      body: '',
+    })
   }
 
-  const postData = async () => {
+  const createPost = async () => {
     try {
-      const response = await post('/posts', formData)
+      const responseServer = await PostModel.createPost(formData)
 
-      if (response.error) {
-        throw new Error(
-          'Não foi possivel realizar a requisição\nError : ' + response.error
-        )
-      }
+      console.log('Post criado com sucesso! \n ', responseServer)
+      alert('Post criado com sucesso!')
 
-      setFormData({
-        title: '',
-        body: '',
-      })
-
-      console.log('Resposta do servidor\n', response.data)
     } catch (error) {
       console.log('Error : ' + error)
+      alert('Não foi possivel criar o post')
     }
   }
 
