@@ -26,6 +26,14 @@ const MenuItem = styled.li`
     background-color: rgb(244, 242, 248);
     cursor: pointer;
   }
+
+  a{
+    text-decoration : none;
+    font-weight: 400;
+    font-size: 14px;
+    color: #000;
+    flex: 1;
+  }
 `
 
 export const DroppDown = {

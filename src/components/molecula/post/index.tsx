@@ -22,7 +22,7 @@ export default function Post({ postTitle, body, email , userName , id }: PostPro
                         <span>{email}</span>
                     </div>
                 </div>
-                <PopoverPost />
+                <PopoverPost postId={id} />
             </PostStyled.WrapperInfo>
             <Link to={`/posts/${id}`} key={id} className='Link'>
                 <PostStyled.TitlePost>{postTitle}</PostStyled.TitlePost>
