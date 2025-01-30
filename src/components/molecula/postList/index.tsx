@@ -44,7 +44,7 @@ export default function PostList() {
     <PostContainer>
       <PostContainerInfo>
         <span>For You</span>
-        <PopoverPost />
+        <PopoverPost postId={0}/>
       </PostContainerInfo>
 
       {listPostWithUserInfo?.map((post) => (
