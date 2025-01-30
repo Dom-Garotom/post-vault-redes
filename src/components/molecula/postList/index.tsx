@@ -8,7 +8,6 @@ import { postWithUserInfo } from '../../../types/postWithUser'
 import { mergePostWithUser } from '../../../utils/mergePostWithUser'
 import { User } from '../../../types/userApi'
 import PopoverPost from '../popover'
-import { Link } from 'react-router-dom'
 
 export default function PostList() {
   const [listPostWithUserInfo, setListPostWithUserInfo] = useState<
@@ -45,19 +44,18 @@ export default function PostList() {
     <PostContainer>
       <PostContainerInfo>
         <span>For You</span>
-        <PopoverPost />
+        <PopoverPost postId={0}/>
       </PostContainerInfo>
 
       {listPostWithUserInfo?.map((post) => (
-        <Link to={`/posts/${post.id}`} key={post.id} className='Link'>
           <Post
             key={post.id}
+            id={post.id}
             userName={post.username}
             email={post.email}
             postTitle={post.title}
             body={post.body}
           />
-        </Link>
       ))}
     </PostContainer>
   )

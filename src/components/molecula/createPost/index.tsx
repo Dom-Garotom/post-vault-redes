@@ -1,67 +1,37 @@
-import { ChangeEvent, FormEvent, useRef, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import userImage from '../../../assets/user-image.png'
 
-import { ButtonSubmit, InputForm, TextAreaForm, Wrapper } from './style'
-import { post } from '../../../services/requests'
-
-interface FormDataSchema {
-  title: string
-  body: string
-}
+import { ButtonSubmit, InputForm, Wrapper } from './style'
+import { FormDataSchema } from '../../../types/formDataSchema'
+import { PostModel } from '../../../models/post'
+import TextAreaForm from '../../atomo/textAreaForm'
+import { takeValueOnInput } from '../../../utils/takeValueOnInput'
 
 export default function CreatePost() {
-  const TextArea = useRef<HTMLTextAreaElement>(null)
   const [formData, setFormData] = useState<FormDataSchema>({
     title: '',
     body: '',
   })
 
-  const takeValue = (
-    event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const { value, name } = event.target
-
-    setFormData((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      }
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault()
+    createPost()
+    setFormData({
+      title: '',
+      body: '',
     })
   }
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault()
-    postData()
-  }
-
-  const postData = async () => {
+  const createPost = async () => {
     try {
-      const response = await post('/posts', formData)
+      const responseServer = await PostModel.createPost(formData)
 
-      if (response.error) {
-        throw new Error(
-          'Não foi possivel realizar a requisição\nError : ' + response.error
-        )
-      }
-
-      setFormData({
-        title: '',
-        body: '',
-      })
-
-      console.log('Resposta do servidor\n', response.data)
+      console.log('Post criado com sucesso! \n ', responseServer)
+      alert('Post criado com sucesso!')
     } catch (error) {
       console.log('Error : ' + error)
+      alert('Não foi possivel criar o post')
     }
-  }
-
-  const resizeTextArea = () => {
-    const textAreaElement = TextArea.current
-
-    if (!textAreaElement) return
-
-    textAreaElement.style.height = 'auto'
-    textAreaElement.style.height = `${textAreaElement.scrollHeight}px`
   }
 
   return (
@@ -72,7 +42,7 @@ export default function CreatePost() {
           name="title"
           type="text"
           placeholder="Whats happening?"
-          onChange={takeValue}
+          onChange={(e) => takeValueOnInput<FormDataSchema>(e, setFormData)}
           value={formData.title}
           required
         />
@@ -82,9 +52,7 @@ export default function CreatePost() {
         <TextAreaForm
           name="body"
           placeholder="Tell us about it..."
-          onInput={resizeTextArea}
-          ref={TextArea}
-          onChange={takeValue}
+          onChange={(e) => takeValueOnInput<FormDataSchema>(e, setFormData)}
           value={formData.body}
           required
         />

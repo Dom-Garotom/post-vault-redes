@@ -48,6 +48,7 @@ export const TitlePost = styled.p`
     font-size: 20px;
     color: #26292E;
     font-family: "Inter" , sans-serif;
+    margin-bottom: 10px;
 `
 
 export const ParagraphPost = styled.p`
