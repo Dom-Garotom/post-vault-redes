@@ -18,6 +18,8 @@ export default function PostList() {
     fetchAndOrderData()
   }, [])
 
+  
+
   const fetchAndOrderData = async () => {
     try {
       const [userResponse, postResponse] = await Promise.all([

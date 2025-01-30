@@ -5,13 +5,26 @@ import TrashImage from '../../../assets/trash.svg'
 import { PopoverStyled } from './popoverStyled'
 import { DropDown } from '../../atomo/dropDown'
 import { NavLink } from 'react-router-dom'
+import { deletePost } from '../deletePost'
 
 type PopoverPostProps = {
-  postId: number
+  postId: number;
+  onDelete: (postID: number) => void;
 }
 
-export default function PopoverPost( { postId } : PopoverPostProps) {
+export default function PopoverPost( { postId, onDelete  } : PopoverPostProps) {
   const [isClicked, setIsClicked] = useState(false)
+
+  const handleDeletePost = async () => {
+    try {
+      console.log(`Excluindo o post ID: ${postId}`);
+      await deletePost(postId);
+      onDelete(postId);
+
+    } catch (error) {
+      console.error('Erro ao excluir o post:', error)
+    }
+  }
 
   return (
     <PopoverStyled.Wrapper>
@@ -27,7 +40,7 @@ export default function PopoverPost( { postId } : PopoverPostProps) {
               Edit post
             </NavLink>
           </DropDown.MenuItem>
-          <DropDown.MenuItem>
+          <DropDown.MenuItem onClick={handleDeletePost}>
             <img src={TrashImage} width={20} height={20} />
             Exclude post
           </DropDown.MenuItem>
