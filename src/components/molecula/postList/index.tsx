@@ -16,7 +16,7 @@ export default function PostList() {
 
   useEffect(() => {
     fetchAndOrderData()
-  }, [])
+  }, [])  
 
   const fetchAndOrderData = async () => {
     try {
