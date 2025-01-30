@@ -9,20 +9,17 @@ import { deletePost } from '../deletePost'
 
 type PopoverPostProps = {
   postId: number;
-  onDelete: (postID: number) => void;
 }
 
-export default function PopoverPost( { postId, onDelete  } : PopoverPostProps) {
+export default function PopoverPost( { postId } : PopoverPostProps) {
   const [isClicked, setIsClicked] = useState(false)
 
   const handleDeletePost = async () => {
     try {
       console.log(`Excluindo o post ID: ${postId}`);
       await deletePost(postId);
-      onDelete(postId);
-
     } catch (error) {
-      console.error('Erro ao excluir o post:', error)
+      console.error('Erro ao excluir o post:', error);
     }
   }
 
@@ -40,9 +37,9 @@ export default function PopoverPost( { postId, onDelete  } : PopoverPostProps) {
               Edit post
             </NavLink>
           </DropDown.MenuItem>
-          <DropDown.MenuItem onClick={handleDeletePost}>
-            <img src={TrashImage} width={20} height={20} />
-            Exclude post
+          <DropDown.MenuItem>
+            <img src={TrashImage} width={20} height={20}/>
+            <p onClick={handleDeletePost}>Exclude post</p>
           </DropDown.MenuItem>
         </DropDown.Menu>
       )}

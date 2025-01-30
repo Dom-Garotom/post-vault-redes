@@ -10,6 +10,7 @@ export const deletePost = async (postId: number): Promise<void> => {
 
         if (!response.error) {
             console.log('Post excluído com sucesso!');
+            alert(`O post com o ID ${postId} foi excluído com sucesso!`)
         } else {
             throw new Error(
                 'Infelizmente não foi possível realizar a exclusão do post\nError: ' +

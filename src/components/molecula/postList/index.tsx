@@ -13,17 +13,10 @@ export default function PostList() {
   const [listPostWithUserInfo, setListPostWithUserInfo] = useState<
     postWithUserInfo[] | undefined
   >([])
-  const [selectedPostId, setSelectedPostId] = useState<number | null>(null)
 
   useEffect(() => {
     fetchAndOrderData()
-  }, [])
-
-  const handlePostDelete = (postId: number) => {
-    setListPostWithUserInfo((prevList) =>
-      prevList?.filter((post) => post.id !== postId)
-    )
-  }
+  }, [])  
 
   const fetchAndOrderData = async () => {
     try {
@@ -51,21 +44,18 @@ export default function PostList() {
     <PostContainer>
       <PostContainerInfo>
         <span>For You</span>
-        <PopoverPost postId={selectedPostId ?? 0} onDelete={handlePostDelete}/>
+        <PopoverPost postId={0}/>
       </PostContainerInfo>
 
       {listPostWithUserInfo?.map((post) => (
-        <div key={post.id}>
-          <div onClick={() => setSelectedPostId(post.id)}>
-            <Post
-              id={post.id}
-              userName={post.username}
-              email={post.email}
-              postTitle={post.title}
-              body={post.body}
-            />
-          </div>
-        </div>
+          <Post
+            key={post.id}
+            id={post.id}
+            userName={post.username}
+            email={post.email}
+            postTitle={post.title}
+            body={post.body}
+          />
       ))}
     </PostContainer>
   )
