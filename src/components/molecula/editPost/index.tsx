@@ -1,5 +1,5 @@
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useContext, useEffect, useState } from 'react'
 
 import ExitImage from '../../../assets/exit.svg'
 import { EditPostSchema } from '../../../types/post'
@@ -7,8 +7,10 @@ import { PostModel } from '../../../models/post'
 import { EditButton, Wrapper } from './style'
 import TextAreaForm from '../../atomo/textAreaForm'
 import { takeValueOnInput } from '../../../utils/takeValueOnInput'
+import { PostContext } from '../../../context/PostContext'
 
 export default function EditPost() {
+  const { post, setPost } = useContext(PostContext)
   const { postId } = useParams<{ postId: string }>()
   const navigate = useNavigate()
 
@@ -20,20 +22,39 @@ export default function EditPost() {
   })
 
   useEffect(() => {
-    handlePostDada()
+    if (!postId) {
+      alert('Id do post não encontrado')
+      navigate('/')
+      return
+    }
+
+    if (!post) {
+      handlePostData(postId)
+    }
+
+    const postEdited = post?.find((post) => post.id === parseInt(postId))
+
+    if (!postEdited) {
+      alert('Post não encontrado')
+      navigate('/')
+      return
+    }
+
+    setFormData((prev) => {
+      return {
+        ...prev,
+        title: postEdited.title,
+        body: postEdited.body,
+      }
+    })
   }, [postId])
 
-  const handlePostDada = async () => {
+  const handlePostData = async (postId: string) => {
     try {
-      if (!postId) {
-        return
-      }
-
       const response = await PostModel.getPostById(postId)
 
       if (!response) {
-        console.log('Erro na requisição!')
-        alert('Erro na requisição')
+        alert('Post inexistente ')
         navigate('/')
         return
       }
@@ -47,17 +68,11 @@ export default function EditPost() {
       })
     } catch (error) {
       console.log('Erro : ', error)
-      alert('Erro na requisição')
-      navigate('/')
     }
   }
 
-  const editPost = async () => {
+  const editPost = async (postId: string) => {
     try {
-      if (!postId) {
-        return
-      }
-
       const responseServer = await PostModel.editPost(postId, formData)
 
       if (!responseServer) {
@@ -66,11 +81,19 @@ export default function EditPost() {
         return
       }
 
-      alert('Post editado com sucesso')
-      console.log('Response : ', responseServer)
-      navigate('/')
+      const postEdited = post?.find((post) => post.id === parseInt(postId))
 
-      // adicionar o contexto
+      if (!postEdited) {
+        return
+      }
+
+      postEdited.body = formData.body
+      postEdited.title = formData.title
+
+      setPost([...(post ?? [])])
+
+      alert('Post editado com sucesso')
+      navigate('/')
     } catch (error) {
       console.error('Error : ' + error)
     }
@@ -78,7 +101,7 @@ export default function EditPost() {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
-    editPost()
+    editPost(postId!)
   }
 
   return (
@@ -105,7 +128,16 @@ export default function EditPost() {
           onChange={(e) => takeValueOnInput<EditPostSchema>(e, setFormData)}
           required
         />
-        <EditButton>Edit</EditButton>
+        <EditButton
+          disabled={!formData.title.trim() || !formData.body.trim()}
+          title={
+            !formData.title.trim() || !formData.body.trim()
+              ? 'Preencha os campos'
+              : 'Button'
+          }
+        >
+          Edit
+        </EditButton>
       </Wrapper.FormBody>
     </Wrapper.Form>
   )

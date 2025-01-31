@@ -71,6 +71,10 @@ export const EditButton = styled.button`
     background-color: rgb(29, 152, 228);
     cursor: pointer;
   }
+
+  &:disabled{
+    cursor: no-drop;
+  }
 `
 
 export const Wrapper = {

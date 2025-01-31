@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr minmax(200px , 630px) 1fr;
   gap: 0;
   margin: 0;
   padding: 0;
@@ -22,10 +22,12 @@ export const PostContainerDiv = styled.div`
 
 export const PostContainerInfoDiv = styled.div`
   width: 100%;
+  min-height: 250px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 28px 18px;
 
   .container-info {
     display: flex;

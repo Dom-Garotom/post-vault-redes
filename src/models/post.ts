@@ -1,5 +1,5 @@
-import { getAll, post, put } from '../services/requests'
-import { EditPostSchema, Post as PostType} from '../types/post'
+import { getAll, post, put, remove } from '../services/requests'
+import { EditPostSchema, Post as PostType } from '../types/post'
 import { User } from '../types/userApi'
 import { FormDataSchema, ResponseCreatePost } from './../types/formDataSchema'
 
@@ -87,6 +87,30 @@ export const PostModel = {
     } catch (error) {
       console.log(error)
       alert('Não foi possível realizar a edição do seu post')
+    }
+  },
+
+  async deletePost(postId: number): Promise<boolean> {
+    try {
+      console.log(`O post que tá sendo excluído é o de ID: ${postId}`)
+
+      const response = await remove(`/posts/${postId}`)
+
+      console.log('Resposta da API: ', response)
+
+      if (response.error) {
+        throw new Error(
+          'Infelizmente não foi possível realizar a exclusão do post\nError: ' +
+            response.error
+        )
+      }
+
+      console.log('Post excluído com sucesso!')
+      alert(`O post com o ID ${postId} foi excluído com sucesso!`)
+      return true
+    } catch (error) {
+      console.error(`Erro ao excluir post ${postId}: `, error)
+      return false
     }
   },
 }
