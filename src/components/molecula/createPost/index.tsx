@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useContext, useState } from 'react'
 import userImage from '../../../assets/user-image.png'
 
 import { ButtonSubmit, InputForm, Wrapper } from './style'
@@ -6,8 +6,10 @@ import { FormDataSchema } from '../../../types/formDataSchema'
 import { PostModel } from '../../../models/post'
 import TextAreaForm from '../../atomo/textAreaForm'
 import { takeValueOnInput } from '../../../utils/takeValueOnInput'
+import { PostContext } from '../../../context/PostContext'
 
 export default function CreatePost() {
+  const { setPost, post } = useContext(PostContext)
   const [formData, setFormData] = useState<FormDataSchema>({
     title: '',
     body: '',
@@ -28,6 +30,19 @@ export default function CreatePost() {
 
       console.log('Post criado com sucesso! \n ', responseServer)
       alert('Post criado com sucesso!')
+
+      //  estamos criando esses dados falso devido não termos o sistema de cadastrar usuários
+      const newPost = {
+        ...formData,
+        userId: 1,
+        id: Math.round(110),
+        username: 'Marcos',
+        email: 'Marcos@exemple',
+      }
+
+      // operador de complacência nula, caso os posts sejam nulos ele retorna um array vázio
+      const newPostList = [newPost, ...(post ?? [])]
+      setPost(newPostList)
     } catch (error) {
       console.log('Error : ' + error)
       alert('Não foi possivel criar o post')
