@@ -24,7 +24,7 @@ export const Wrapper = styled.div`
     color: #63686D;
     border: none;
     border-radius: 5px;
-    cursor: not-allowed; /* Desabilitado */
+    cursor: not-allowed; 
     opacity: 0.7;
     
     &:hover {

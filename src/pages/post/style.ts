@@ -1,5 +1,17 @@
 import styled from "styled-components";
 
+export const Wrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    .profile-detail{
+        position: absolute;
+        margin-left: 888px;
+        max-width: 323px;
+    }
+`
+
 export const PostContainerDiv = styled.div`
     width: 100%;
     height: 100%;
