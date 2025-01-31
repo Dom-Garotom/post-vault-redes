@@ -1,44 +1,75 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Post as PostType } from "../../types/post";
-import { PostContainerDiv, PostContainerInfoDiv, TitlePost, Paragraph } from "./style";
-import { PostModel } from "../../models/post";
+import { useState, useEffect, useContext } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { Post as PostType } from '../../types/post'
+import {
+  PostContainerDiv,
+  PostContainerInfoDiv,
+  TitlePost,
+  Paragraph,
+} from './style'
+import { PostModel } from '../../models/post'
+import { PostContext } from '../../context/PostContext'
 
-export default function Post(){
-    const { id } = useParams<{ id: string }>(); 
-    const [post, setPost] = useState<PostType | null>(null);
-    const [error, setError] = useState<string | null>(null);
+export default function Post() {
+  const { id } = useParams<{ id: string }>()
+  const { post } = useContext(PostContext)
+  const navigate = useNavigate()
 
-    useEffect(() => {
-      const fetchPost = async () => {
-        try {
-          const foundPost = await PostModel.getPostById(id!);
-          setPost(foundPost);
-        } catch (err: unknown) {
-          setError(err instanceof Error ? err.message : "Erro desconhecido!");
-        }
-      };
-  
-      fetchPost();
-    }, [id]);
-      if (error) {
-        return <div>Erro: {error}</div>;
+  const [postCurrent, setPostCurrent] = useState<PostType>()
+
+  useEffect(() => {
+    if (!id) {
+      alert('Id do post não encontrado')
+      navigate('/')
+      return
     }
 
-    return (
-      <div>
-        {post ? (
-          <PostContainerDiv>
-            <PostContainerInfoDiv>
-              <div className="container-info">
-                <TitlePost>{post.title}</TitlePost>
-                <Paragraph>{post.body}</Paragraph>
-              </div>
-            </PostContainerInfoDiv>
-          </PostContainerDiv>
-        ) : (
-          <div>Post não encontrado</div>
-        )}
-      </div>
-    );
+    if (!post) {
+      fetchPost(id)
+      return
+    }
+
+    const foundPost = post.find((post) => post.id === parseInt(id))
+
+    if (!foundPost) {
+      alert('Post não encontrado')
+      navigate('/')
+      return
+    }
+
+    setPostCurrent(foundPost)
+  }, [id])
+
+  const fetchPost = async (postId: string) => {
+    try {
+      const foundPost = await PostModel.getPostById(postId)
+
+      if (!foundPost) {
+        alert('Post não encontrado')
+        navigate('/')
+        return
+      }
+
+      setPostCurrent(foundPost)
+    } catch (err: unknown) {
+      console.log(err instanceof Error ? err.message : 'Erro desconhecido!')
+    }
+  }
+
+  return (
+    <div>
+      {postCurrent ? (
+        <PostContainerDiv>
+          <PostContainerInfoDiv>
+            <div className="container-info">
+              <TitlePost>{postCurrent.title}</TitlePost>
+              <Paragraph>{postCurrent.body}</Paragraph>
+            </div>
+          </PostContainerInfoDiv>
+        </PostContainerDiv>
+      ) : (
+        <div>Post não encontrado</div>
+      )}
+    </div>
+  )
 }
