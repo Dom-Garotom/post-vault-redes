@@ -1,6 +1,4 @@
-# Alerta 24hrs
-
-**Alerta 24hrs** é um site que faz monitoramento de nobreaks, fornecendo informações em tempo real sobre o status e a saúde dos dispositivos. O projeto é desenvolvido com as tecnologias React, Styled Components, Axios, Sass, e React Router DOM, e segue o Atomic Design Pattern para organizar os componentes.
+# Sistema de posts
 
 ## Tecnologias Utilizadas
 
