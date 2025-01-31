@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Post as PostType } from "../../types/post";
-import { PostContainerDiv, PostContainerInfoDiv, TitlePost, Paragraph } from "./style";
+import { PostContainerDiv, PostContainerInfoDiv, Wrapper, ProfileDetailStyle  } from "./style";
 import { PostModel } from "../../models/post";
+import ProfileDetail from "../../components/molecula/profileDetail";
 
 export default function Post(){
     const { id } = useParams<{ id: string }>(); 
@@ -21,24 +22,27 @@ export default function Post(){
   
       fetchPost();
     }, [id]);
-      if (error) {
-        return <div>Erro: {error}</div>;
+    if (error) {
+      return <div>Erro: {error}</div>;
     }
 
     return (
-      <div>
+      <Wrapper >
         {post ? (
           <PostContainerDiv>
             <PostContainerInfoDiv>
               <div className="container-info">
-                <TitlePost>{post.title}</TitlePost>
-                <Paragraph>{post.body}</Paragraph>
+                <h1>{post.title}</h1>
+                <p>{post.body}</p>
               </div>
             </PostContainerInfoDiv>
           </PostContainerDiv>
         ) : (
           <div>Post não encontrado</div>
         )}
-      </div>
+          <ProfileDetailStyle>
+            <ProfileDetail/>
+          </ProfileDetailStyle>
+      </Wrapper >
     );
 }
