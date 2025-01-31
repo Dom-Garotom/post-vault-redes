@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Post as PostType } from "../../types/post";
 import { PostContainerDiv, PostContainerInfoDiv, TitlePost, Paragraph } from "./style";
 import { PostModel } from "../../models/post";
+import ProfileDetail from "../../components/molecula/profileDetail";
 
 export default function Post(){
     const { id } = useParams<{ id: string }>(); 
@@ -21,8 +22,8 @@ export default function Post(){
   
       fetchPost();
     }, [id]);
-      if (error) {
-        return <div>Erro: {error}</div>;
+    if (error) {
+      return <div>Erro: {error}</div>;
     }
 
     return (
@@ -39,6 +40,8 @@ export default function Post(){
         ) : (
           <div>Post não encontrado</div>
         )}
+
+        <ProfileDetail/>
       </div>
     );
 }

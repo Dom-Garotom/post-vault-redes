@@ -1,5 +1,6 @@
 import { getAll, post, put } from '../services/requests'
-import { EditPostSchema, Post as PostType } from '../types/post'
+import { EditPostSchema, Post as PostType} from '../types/post'
+import { User } from '../types/userApi'
 import { FormDataSchema, ResponseCreatePost } from './../types/formDataSchema'
 
 export const PostModel = {
@@ -20,6 +21,25 @@ export const PostModel = {
       throw new Error(err instanceof Error ? err.message : 'Erro Desconhecido')
     }
   },
+
+  async getUserById(id: string): Promise<User | null> {
+    try {
+      const response = await getAll('/users')
+
+      if (response.error) {
+        throw new Error('Erro ao buscar os dados.')
+      }
+
+      const post = response.data as User[]
+      const foundPost = post.find((post) => post.id.toString() === id)
+
+      return foundPost || null
+    } catch (err) {
+      console.error(err)
+      throw new Error(err instanceof Error ? err.message : 'Erro Desconhecido')
+    }
+  },
+
 
   async createPost(
     formData: FormDataSchema
