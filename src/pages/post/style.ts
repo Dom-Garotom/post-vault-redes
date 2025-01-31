@@ -22,7 +22,9 @@ export const PostContainerDiv = styled.div`
 
 export const PostContainerInfoDiv = styled.div`
   width: 100%;
+  min-height: 250px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   padding: 28px 18px;

@@ -10,6 +10,7 @@ import {
 import { PostModel } from '../../models/post'
 import { PostContext } from '../../context/PostContext'
 import ProfileDetail from '../../components/molecula/profileDetail'
+import CommentList from '../../components/molecula/commentsList'
 
 
 export default function Post() {
@@ -68,6 +69,7 @@ export default function Post() {
             <p>{postCurrent.body}</p>
           </div>
         </PostContainerInfoDiv>
+          <CommentList id={parseInt(id!)}/>
       </PostContainerDiv>
     ) : (
       <div>Post não encontrado</div>
