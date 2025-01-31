@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Post as PostType } from "../../types/post";
-import { PostContainerDiv, PostContainerInfoDiv, TitlePost, Paragraph, Wrapper  } from "./style";
+import { PostContainerDiv, PostContainerInfoDiv, Wrapper, ProfileDetailStyle  } from "./style";
 import { PostModel } from "../../models/post";
 import ProfileDetail from "../../components/molecula/profileDetail";
 
@@ -32,17 +32,17 @@ export default function Post(){
           <PostContainerDiv>
             <PostContainerInfoDiv>
               <div className="container-info">
-                <TitlePost>{post.title}</TitlePost>
-                <Paragraph>{post.body}</Paragraph>
+                <h1>{post.title}</h1>
+                <p>{post.body}</p>
               </div>
             </PostContainerInfoDiv>
           </PostContainerDiv>
         ) : (
           <div>Post não encontrado</div>
         )}
-          <div className="profile-detail">
+          <ProfileDetailStyle>
             <ProfileDetail/>
-          </div>
+          </ProfileDetailStyle>
       </Wrapper >
     );
 }
