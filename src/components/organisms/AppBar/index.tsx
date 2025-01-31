@@ -15,7 +15,9 @@ const AppBar: React.FC<Props> = ({ children }: Props): JSX.Element => {
 
   return (
     <div>
-      <StyledHeader>Header</StyledHeader>
+      <StyledHeader>
+        Header
+      </StyledHeader>
       <main>{children}</main>
     </div>
   )
