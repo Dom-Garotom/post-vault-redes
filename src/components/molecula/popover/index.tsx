@@ -27,6 +27,7 @@ export default function PopoverPost({ postId }: PopoverPostProps) {
 
       const newPostList = post?.filter((post) => post.id !== postId) ?? []
       setPost(newPostList)
+
     } catch (error) {
       console.error('Erro ao excluir o post:', error)
     }

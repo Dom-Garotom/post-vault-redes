@@ -3,7 +3,7 @@ type Geo = {
     lng: string;
 };
 
-type Address = {
+export type Address = {
     street: string;
     suite: string;
     city: string;

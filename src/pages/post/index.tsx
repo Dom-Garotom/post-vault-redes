@@ -4,11 +4,13 @@ import { Post as PostType } from '../../types/post'
 import {
   PostContainerDiv,
   PostContainerInfoDiv,
-  TitlePost,
-  Paragraph,
+  ProfileDetailStyle,
+  Wrapper,
 } from './style'
 import { PostModel } from '../../models/post'
 import { PostContext } from '../../context/PostContext'
+import ProfileDetail from '../../components/molecula/profileDetail'
+
 
 export default function Post() {
   const { id } = useParams<{ id: string }>()
@@ -57,19 +59,22 @@ export default function Post() {
   }
 
   return (
-    <div>
-      {postCurrent ? (
-        <PostContainerDiv>
-          <PostContainerInfoDiv>
-            <div className="container-info">
-              <TitlePost>{postCurrent.title}</TitlePost>
-              <Paragraph>{postCurrent.body}</Paragraph>
-            </div>
-          </PostContainerInfoDiv>
-        </PostContainerDiv>
-      ) : (
-        <div>Post não encontrado</div>
-      )}
-    </div>
+    <Wrapper   >
+    {postCurrent ? (
+      <PostContainerDiv>
+        <PostContainerInfoDiv>
+          <div className="container-info">
+            <h1>{postCurrent.title}</h1>
+            <p>{postCurrent.body}</p>
+          </div>
+        </PostContainerInfoDiv>
+      </PostContainerDiv>
+    ) : (
+      <div>Post não encontrado</div>
+    )}
+      <ProfileDetailStyle>
+        <ProfileDetail/>
+      </ProfileDetailStyle>
+  </Wrapper >
   )
 }
