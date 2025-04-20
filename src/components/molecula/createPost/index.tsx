@@ -7,8 +7,10 @@ import { PostModel } from '../../../models/post'
 import TextAreaForm from '../../atomo/textAreaForm'
 import { takeValueOnInput } from '../../../utils/takeValueOnInput'
 import { PostContext } from '../../../context/PostContext'
+import { FeedBackContext } from '../../../context/modules/FeedBackContext'
 
 export default function CreatePost() {
+  const { showSuccess, showError } = useContext(FeedBackContext)
   const { setPost, post } = useContext(PostContext)
   const [formData, setFormData] = useState<FormDataSchema>({
     title: '',
@@ -27,9 +29,8 @@ export default function CreatePost() {
   const createPost = async () => {
     try {
       const responseServer = await PostModel.createPost(formData)
-
+      showSuccess('Post criado com sucesso!')
       console.log('Post criado com sucesso! \n ', responseServer)
-      alert('Post criado com sucesso!')
 
       //  estamos criando esses dados falso devido não termos o sistema de cadastrar usuários
       const newPost = {
@@ -45,6 +46,7 @@ export default function CreatePost() {
       setPost(newPostList)
     } catch (error) {
       console.log('Error : ' + error)
+      showError('Não foi possivel criar o post')
       alert('Não foi possivel criar o post')
     }
   }

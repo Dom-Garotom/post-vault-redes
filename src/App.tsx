@@ -5,6 +5,7 @@ import AppContext from './context/AppContext'
 import AppBar from './components/organisms/AppBar'
 import { BrowserRouter } from 'react-router-dom'
 import PostContextProvider from './context/PostContext'
+import FeedBackProvider from './context/FeedBackProvider'
 
 function App(): JSX.Element {
   return (
@@ -13,7 +14,9 @@ function App(): JSX.Element {
         <PostContextProvider>
           <BrowserRouter>
             <AppBar>
-              <Routes />
+              <FeedBackProvider>
+                <Routes />
+              </FeedBackProvider>
             </AppBar>
           </BrowserRouter>
         </PostContextProvider>
