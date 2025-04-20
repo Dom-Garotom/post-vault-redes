@@ -1,62 +1,37 @@
-import React, { useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 
 import { PostContainer, PostContainerInfo } from './style'
-import PopoverPost from '../../atomo/popover'
 import Post from '../post'
-import { Post as TypePost } from '../../../types/post'
-import { User } from '../../../types/user'
-import { fetchData } from '../../../utils/fetchData'
-import { postWithUserInfo } from '../../../types/postWithUser'
-import { mergePostWithUser } from '../../../utils/mergePostWithUser'
-
+import PopoverPost from '../popover'
+import { PostContext } from '../../../context/PostContext'
+import { fetchAndOrderDataPost } from '../../../utils/fectAndOrderDataPost'
 
 export default function PostList() {
-  const [listPostWithUserInfo, setListPostWithUserInfo] = useState<postWithUserInfo[] | undefined>([])
+  const { post  ,  setPost} = useContext(PostContext);
 
   useEffect(() => {
-    fetchAndOrderData();
-  }, [])
-
-  const fetchAndOrderData = async () => {
-    try {
-      const [userResponse, postResponse] = await Promise.all([
-        fetchData<User>("/users"),
-        fetchData<TypePost>("/posts"),
-      ])
-
-      if (!userResponse || !postResponse) {
-        throw new Error("Não foi possível realizar a requisição dos dados")
-      }
-
-      const postList = postResponse
-      const userList = userResponse
-
-      // Retorna um objeto com as informações dos post atrelado com as nformações dos usuários que fez o post
-      const listPostWithUser = mergePostWithUser(postList, userList);
-      setListPostWithUserInfo(listPostWithUser)
-
-    } catch (error) {
-      console.log("Error : " + error)
+    if (!post) {
+      fetchAndOrderDataPost(setPost)
     }
-  }
+  }, [])  
 
   return (
     <PostContainer>
       <PostContainerInfo>
         <span>For You</span>
-        <PopoverPost />
+        <PopoverPost postId={0}/>
       </PostContainerInfo>
 
-      {listPostWithUserInfo?.map(post => (
-        <Post
-          key={post.id}
-          userName={post.username}
-          email={post.email}
-          postTitle={post.title}
-          body={post.body}
-        />
+      {post?.map((post) => (
+          <Post
+            key={post.id}
+            id={post.id}
+            userName={post.username}
+            email={post.email}
+            postTitle={post.title}
+            body={post.body}
+          />
       ))}
-
     </PostContainer>
   )
 }

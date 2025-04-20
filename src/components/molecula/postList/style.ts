@@ -3,12 +3,17 @@ import styled from "styled-components"
 export const PostContainer =  styled.div`
   max-width: 630px;
   width: 100%;
+  height: 100%;
   min-block-size: 30vh;
   padding: 16px 0px;
   gap: 14px;
   border: 1px solid #DCDEE0;
   border-radius: 30px 30px 0px 0px;
   margin-bottom: 20px;
+
+  .Link {
+    text-decoration: none;
+  }
 `
 export const PostContainerInfo =  styled.div`
   display: flex;

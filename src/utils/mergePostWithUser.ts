@@ -1,6 +1,6 @@
 import { Post } from "../types/post";
 import { postWithUserInfo } from "../types/postWithUser";
-import { User } from "../types/user";
+import { User } from "../types/userApi";
 
 export const mergePostWithUser = (postList: Post[], userList: User[]) => {
     return postList
