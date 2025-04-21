@@ -40,7 +40,6 @@ export const PostModel = {
     }
   },
 
-
   async createPost(
     formData: FormDataSchema
   ): Promise<ResponseCreatePost | undefined> {
@@ -106,7 +105,7 @@ export const PostModel = {
       }
 
       console.log('Post excluído com sucesso!')
-      alert(`O post com o ID ${postId} foi excluído com sucesso!`)
+
       return true
     } catch (error) {
       console.error(`Erro ao excluir post ${postId}: `, error)

@@ -1,26 +1,30 @@
 import React, { ReactNode } from 'react'
-import { toast, Toaster } from 'sonner'
+import { Toaster } from 'sonner'
 import { FeedBackContext, FeedBackContextType } from './modules/FeedBackContext'
 import { ToasterProps } from 'sonner'
+import { showToast } from '../components/atomo/Toast'
 
 interface FeedBackProvider {
   children: ReactNode
 }
 
 const FeedBackProvider: React.FC<FeedBackProvider> = ({ children }) => {
-  const showToast: FeedBackContextType = {
+  const showToasts: FeedBackContextType = {
     showError: (message: string, options?: ToasterProps) =>
-      toast.error(message, { ...options }),
+      showToast('error', message, options),
 
     showInfo: (message: string, options?: ToasterProps) =>
-      toast.info(message, { ...options }),
+      showToast('info', message, options),
 
     showSuccess: (message: string, options?: ToasterProps) =>
-      toast.success(message, { ...options }),
+      showToast('success', message, options),
+
+    showWarning: (message: string, options?: ToasterProps) =>
+      showToast('warning', message, options),
   }
 
   return (
-    <FeedBackContext.Provider value={showToast}>
+    <FeedBackContext.Provider value={showToasts}>
       {children}
       <Toaster />
     </FeedBackContext.Provider>

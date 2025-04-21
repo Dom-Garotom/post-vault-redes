@@ -8,8 +8,10 @@ import { EditButton, Wrapper } from './style'
 import TextAreaForm from '../../atomo/textAreaForm'
 import { takeValueOnInput } from '../../../utils/takeValueOnInput'
 import { PostContext } from '../../../context/PostContext'
+import { FeedBackContext } from '../../../context/modules/FeedBackContext'
 
 export default function EditPost() {
+  const { showSuccess, showError } = useContext(FeedBackContext)
   const { post, setPost } = useContext(PostContext)
   const { postId } = useParams<{ postId: string }>()
   const navigate = useNavigate()
@@ -23,7 +25,7 @@ export default function EditPost() {
 
   useEffect(() => {
     if (!postId) {
-      alert('Id do post não encontrado')
+      showError('Id do post não encontrado')
       navigate('/')
       return
     }
@@ -35,7 +37,7 @@ export default function EditPost() {
     const postEdited = post?.find((post) => post.id === parseInt(postId))
 
     if (!postEdited) {
-      alert('Post não encontrado')
+      showError('Post não encontrado')
       navigate('/')
       return
     }
@@ -54,7 +56,7 @@ export default function EditPost() {
       const response = await PostModel.getPostById(postId)
 
       if (!response) {
-        alert('Post inexistente ')
+        showError('Post inexistente ')
         navigate('/')
         return
       }
@@ -76,7 +78,7 @@ export default function EditPost() {
       const responseServer = await PostModel.editPost(postId, formData)
 
       if (!responseServer) {
-        alert('Não foi possivle editar seu post')
+        showError('Não foi possivle editar seu post')
         navigate('/')
         return
       }
@@ -92,7 +94,7 @@ export default function EditPost() {
 
       setPost([...(post ?? [])])
 
-      alert('Post editado com sucesso')
+      showSuccess('Post editado com sucesso')
       navigate('/')
     } catch (error) {
       console.error('Error : ' + error)

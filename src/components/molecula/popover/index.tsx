@@ -7,6 +7,7 @@ import { PostModel } from '../../../models/post'
 import ConfigImage from '../../../assets/sliders-solid.svg'
 import TrashImage from '../../../assets/trash.svg'
 import { NavLink } from 'react-router-dom'
+import { FeedBackContext } from '../../../context/modules/FeedBackContext'
 
 type PopoverPostProps = {
   postId: number
@@ -15,10 +16,11 @@ type PopoverPostProps = {
 export default function PopoverPost({ postId }: PopoverPostProps) {
   const [isClicked, setIsClicked] = useState(false)
   const { setPost, post } = useContext(PostContext)
+  const { showWarning } = useContext(FeedBackContext)
 
   const handleDeletePost = async () => {
     try {
-      console.log(`Excluindo o post ID: ${postId}`)
+      showWarning(`Seu post foi excluido com sucesso - postId : ${postId}`)
       const resultOfOperation = await PostModel.deletePost(postId)
 
       if (!resultOfOperation) {
@@ -27,7 +29,6 @@ export default function PopoverPost({ postId }: PopoverPostProps) {
 
       const newPostList = post?.filter((post) => post.id !== postId) ?? []
       setPost(newPostList)
-
     } catch (error) {
       console.error('Erro ao excluir o post:', error)
     }
