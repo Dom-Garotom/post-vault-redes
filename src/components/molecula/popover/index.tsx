@@ -20,15 +20,15 @@ export default function PopoverPost({ postId }: PopoverPostProps) {
 
   const handleDeletePost = async () => {
     try {
-      showWarning(`Seu post foi excluido com sucesso - postId : ${postId}`)
       const resultOfOperation = await PostModel.deletePost(postId)
-
+      
       if (!resultOfOperation) {
         return
       }
-
+      
       const newPostList = post?.filter((post) => post.id !== postId) ?? []
       setPost(newPostList)
+      showWarning(`Seu post foi excluido com sucesso - postId : ${postId}`)
     } catch (error) {
       console.error('Erro ao excluir o post:', error)
     }

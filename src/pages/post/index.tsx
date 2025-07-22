@@ -4,13 +4,10 @@ import { Post as PostType } from '../../types/post'
 import {
   PostContainerDiv,
   PostContainerInfoDiv,
-  ProfileDetailStyle,
   Wrapper,
 } from './style'
 import { PostModel } from '../../models/post'
 import { PostContext } from '../../context/PostContext'
-import ProfileDetail from '../../components/molecula/profileDetail'
-import CommentList from '../../components/molecula/commentsList'
 
 
 export default function Post() {
@@ -69,14 +66,14 @@ export default function Post() {
             <p>{postCurrent.body}</p>
           </div>
         </PostContainerInfoDiv>
-          <CommentList id={parseInt(id!)}/>
+          {/* <CommentList id={parseInt(id!)}/> */}
       </PostContainerDiv>
     ) : (
       <div>Post não encontrado</div>
     )}
-      <ProfileDetailStyle>
+      {/* <ProfileDetailStyle>
         <ProfileDetail/>
-      </ProfileDetailStyle>
+      </ProfileDetailStyle> */}
   </Wrapper >
   )
 }

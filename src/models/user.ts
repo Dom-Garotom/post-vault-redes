@@ -7,7 +7,7 @@ export const getUser = async (
   const response = await getOne(`/users/${userId}`)
 
   if (response.data) {
-    return response.data
+    return response.data as UserInterface
   }
 
   return null

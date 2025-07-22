@@ -30,13 +30,16 @@ export default function CreatePost() {
     try {
       const responseServer = await PostModel.createPost(formData)
       showSuccess('Post criado com sucesso!')
-      console.log('Post criado com sucesso! \n ', responseServer)
 
-      //  estamos criando esses dados falso devido não termos o sistema de cadastrar usuários
+      if (!responseServer) {
+        showError('Não foi possivel criar o post')
+        return
+      }
+
       const newPost = {
         ...formData,
         userId: 1,
-        id: Math.round(110),
+        id: responseServer.id,
         username: 'Marcos',
         email: 'Marcos@exemple',
       }
@@ -58,7 +61,7 @@ export default function CreatePost() {
         <InputForm
           name="title"
           type="text"
-          placeholder="Whats happening?"
+          placeholder="No que está pensando?"
           onChange={(e) => takeValueOnInput<FormDataSchema>(e, setFormData)}
           value={formData.title}
           required
@@ -68,7 +71,7 @@ export default function CreatePost() {
       <Wrapper.BodyForm>
         <TextAreaForm
           name="body"
-          placeholder="Tell us about it..."
+          placeholder="Gostaria de contar para nós..."
           onChange={(e) => takeValueOnInput<FormDataSchema>(e, setFormData)}
           value={formData.body}
           required

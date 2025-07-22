@@ -4,18 +4,40 @@ import { User } from '../types/userApi'
 import { FormDataSchema, ResponseCreatePost } from './../types/formDataSchema'
 
 export const PostModel = {
-  async getPostById(id: string): Promise<PostType | null> {
+  async getAllPost(): Promise<PostType[] | null> {
     try {
-      const response = await getAll('/posts')
+      const response = await getAll('/posts/')
+      console.log('Teste:\n')
+      console.log(response)
 
       if (response.error) {
         throw new Error('Erro ao buscar os dados.')
       }
 
-      const post = response.data as PostType[]
-      const foundPost = post.find((post) => post.id.toString() === id)
+      if (!response.data) {
+        return null
+      }
 
-      return foundPost || null
+      return response.data as PostType[]
+    } catch (err) {
+      console.error(err)
+      throw new Error(err instanceof Error ? err.message : 'Erro Desconhecido')
+    }
+  },
+
+  async getPostById(id: string): Promise<PostType | null> {
+    try {
+      const response = await getAll(`/posts/${id}/`)
+
+      if (response.error) {
+        throw new Error('Erro ao buscar os dados.')
+      }
+
+      if (!response.data) {
+        return null
+      }
+
+      return response.data as PostType
     } catch (err) {
       console.error(err)
       throw new Error(err instanceof Error ? err.message : 'Erro Desconhecido')
@@ -44,7 +66,10 @@ export const PostModel = {
     formData: FormDataSchema
   ): Promise<ResponseCreatePost | undefined> {
     try {
-      const response = await post('/posts', formData)
+      const response = await post('/posts/', {
+        ...formData,
+        userId: 1,
+      })
 
       if (response.error) {
         throw new Error(
@@ -68,7 +93,7 @@ export const PostModel = {
     body: EditPostSchema
   ): Promise<EditPostSchema | undefined> {
     try {
-      const response = await put(`/posts/${postId}`, body)
+      const response = await put(`/posts/${postId}/`, body)
 
       if (response.error) {
         throw new Error(
@@ -93,7 +118,7 @@ export const PostModel = {
     try {
       console.log(`O post que tá sendo excluído é o de ID: ${postId}`)
 
-      const response = await remove(`/posts/${postId}`)
+      const response = await remove(`/posts/${postId}/`)
 
       console.log('Resposta da API: ', response)
 

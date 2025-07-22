@@ -8,7 +8,7 @@ export const fetchData = async <T>(path: string): Promise<T[] | undefined> => {
             throw new Error("Não foi possivel realizar a requisição");
         }
 
-        const user : T[] = response.data;
+        const user : T[] = response.data as [];
         return user;
 
     } catch (error) {

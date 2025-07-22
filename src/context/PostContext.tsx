@@ -1,10 +1,10 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react'
-import { postWithUserInfo } from '../types/postWithUser'
-import { fetchAndOrderDataPost } from '../utils/fectAndOrderDataPost'
+import { PostModel } from '../models/post'
+import { EditPostSchema } from '../types/post'
 
 interface PostContextType {
-  post: postWithUserInfo[] | null
-  setPost: React.Dispatch<React.SetStateAction<postWithUserInfo[] | null>>
+  post: EditPostSchema[] | null
+  setPost: React.Dispatch<React.SetStateAction<EditPostSchema[] | null>>
 }
 
 const defaultPostContext: PostContextType = {
@@ -18,14 +18,27 @@ interface PostContextProviderProps {
   children: ReactNode
 }
 
-const PostContextProvider : React.FC<PostContextProviderProps> = ({ children }) => {
-  const [post, setPost] = useState<postWithUserInfo[] | null>(null)
+const PostContextProvider: React.FC<PostContextProviderProps> = ({
+  children,
+}) => {
+  const [post, setPost] = useState<EditPostSchema[] | null>(null)
 
   useEffect(() => {
     if (!post) {
-      fetchAndOrderDataPost(setPost)
+      fetchPost()
     }
-  }, [])
+  }, [post])
+
+  const fetchPost = async () => {
+    const posts = await PostModel.getAllPost()
+
+    if (posts === null) {
+      setPost([])
+      return
+    }
+
+    setPost(posts)
+  }
 
   return (
     <PostContext.Provider value={{ post, setPost }}>
